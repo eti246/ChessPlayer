@@ -1,0 +1,60 @@
+﻿
+<div id="board">
+    @{
+        Pos = 0;
+    }
+    @for (int i = 0; i < 8; i++)
+    {
+        <div class="square1">
+            @(i+1)
+        </div>
+        for (int a = 0; a < 8; a++)
+        {
+            var x = ReturnId(i, a);
+            <div id="@x" class="square @((a +i)%2 ==0 ? "whitesquare":"blacksquare")" @onclick="(e) => {Move(x);}">
+                @if(Position[Pos]!=0)
+                {
+                    <img src="Img/@(Position[Pos]).png" >
+                }
+            </div>
+            Pos++;
+        }
+    }
+        <div class="square1"></div>
+    @for (int i = 0; i < 8; i++)
+    {
+        <div class="square1">
+            @((char)(65+i))
+        </div>
+    }
+</div>
+@code {
+    int Pos = 0;
+    public static string ReturnId(int row, int column)
+    {
+        return ((char)(65 + column)).ToString() + (row+1);
+    }
+
+    public static List<int> Position = new List<int>
+        { 16,13,11,15,12,11,13,16,
+          14,14,14,14,14,14,14,14,
+          0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,
+          24,24,24,24,24,24,24,24,
+          26,23,21,25,22,21,23,26
+    };
+
+    protected override void OnInitialized()
+    {
+
+    }
+    public static void Move(string id)
+    {
+        int type = (65-id[0]) + id[1];
+        Console.WriteLine((int)id[0]);
+        Console.WriteLine(type);
+    }
+
+}
